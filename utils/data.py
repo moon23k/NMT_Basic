@@ -17,7 +17,7 @@ def read_text(d_name, tok_type, f_name, max_words=100):
             _line.append(1) #append eos token
         data.append(_line)
     
-    return data
+
 
 
 

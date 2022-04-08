@@ -13,7 +13,7 @@ import torch.optim as optim
 
 
 from utils.data import get_dataloader
-from utils.model import load_model
+from utils.model import load_model, count_parameters
 from utils.train import seq2seq_train_epoch, seq2seq_eval_epoch, transformer_train_epoch, transformer_eval_epoch, epoch_time
 from utils.scheduler import get_scheduler
 
@@ -84,13 +84,19 @@ def run(args, config):
     #define training record dict
     train_record = defaultdict(list)
         
-    #get dataloader from chosen dataset
-    train_dataloader = get_dataloader(args.data, args.tokenizer, 'train', config.batch_size)
-    valid_dataloader = get_dataloader(args.data, args.tokenizer, 'valid', config.batch_size)
+    ##Get dataloader from chosen dataset
+    #reverse input for seq2seq model
+    if args.model == 'seq2seq':
+        train_dataloader = get_dataloader(args.data, args.tokenizer, 'train', config.batch_size, reverse=True)
+        valid_dataloader = get_dataloader(args.data, args.tokenizer, 'valid', config.batch_size, reverse=True)
+    else:
+        train_dataloader = get_dataloader(args.data, args.tokenizer, 'train', config.batch_size)
+        valid_dataloader = get_dataloader(args.data, args.tokenizer, 'valid', config.batch_size)
     
     
     #load model, criterion, optimizer, scheduler
     model = load_model(args.model, config)
+    train_record['model_params'] = count_parameters(model)
     criterion = nn.CrossEntropyLoss(ignore_index=config.pad_idx).to(config.device)
     optimizer = optim.Adam(model.parameters(), lr=config.learning_rate)
 	
@@ -133,14 +139,14 @@ def run(args, config):
         #save best model
         if valid_loss < config.best_valid_loss:
             config.best_valid_loss = valid_loss
-            torch.save({'epoch': epoch + 1,
+            torch.save({'epochs': epoch + 1,
                         'model_state_dict': model.state_dict(),
                         'optimizer_state_dict': optimizer.state_dict(),
                         'train_loss': train_loss,
                         'valid_loss': valid_loss}, chk_path)
 
-        print(f"Epoch: {epoch + 1} | Time: {epoch_mins}m {epoch_secs}s")
-        print(f'\tTrain Loss: {train_loss:.3f} | Valid Loss: {valid_loss:.3f}')
+        print(f"\tEpoch: {epoch + 1} | Time: {epoch_mins}m {epoch_secs}s")
+        print(f'\t\tTrain Loss: {train_loss:.3f} | Valid Loss: {valid_loss:.3f}')
 
 
     train_mins, train_secs = epoch_time(record_time, time.time())
