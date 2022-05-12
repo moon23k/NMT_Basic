@@ -49,7 +49,7 @@ But the Transformer solved these problems only with Attentions. As a result, it 
 ## Training
 
 <center>
-  <img src="https://user-images.githubusercontent.com/71929682/168108318-67fd73da-d3f4-4b11-a8cf-4bac1d05c8d3.png" width="70%" height="60%">
+  <img src="https://user-images.githubusercontent.com/71929682/168110116-374d3ac9-48d6-41e3-a2ce-d216f2e76422.png" width="70%" height="60%">
 </center>
 
 
