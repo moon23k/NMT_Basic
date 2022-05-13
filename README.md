@@ -78,6 +78,22 @@ bash run.sh -a [train/test/inference] -m [seq2seq, attn, transformer]
 <br>
 
 
+## Results
+
+Expected BLEU Score (The value based on the Best Performance posed on "paperswithcode" home page with wmt14 en-de dataset)
+* Seq2Seq Model : About 10
+* Seq2Seq with Attention Model : About 15
+* Transformer Model : About 20
+
+<br>
+
+Actual BLEU Score
+* Seq2Seq Model : 
+* Seq2Seq with Attention Model : 
+* Transformer Model : 
+
+
+
 ## Reference
 * Sequence to Sequence Learning with Neural Networks
 * Neural Machine Translation by Jointly Learning to Align and Translate
