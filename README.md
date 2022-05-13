@@ -48,6 +48,13 @@ But the Transformer solved these problems only with Attentions. As a result, it 
 
 ## Training
 
+Data: Downsized WMT14 EN-DE (4.5M -> 1M)
+(Because of Hardware Limitation)
+
+<br>
+
+
+
 <center>
   <img src="https://user-images.githubusercontent.com/71929682/168110116-374d3ac9-48d6-41e3-a2ce-d216f2e76422.png" width="70%" height="60%">
 </center>
